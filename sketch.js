@@ -11,7 +11,7 @@ function preload(){
 
 //Function to set initial environment
 var balloonPosition=database.ref('balloon/height')
-balloonPosition.on('value',readPosition)
+ balloonPosition.on('value',readPosition)
 
 function setup() {
   database=firebase.database();
@@ -20,7 +20,7 @@ function setup() {
   balloon=createSprite(250,450,150,150);
   balloon.addAnimation("hotAirBalloon",balloonImage1);
   balloon.scale=0.5;
-
+ 
   textSize(20); 
 }
 
@@ -29,23 +29,23 @@ function draw() {
   background(bg);
 
   if(keyDown(LEFT_ARROW)){
-    balloon.addAnimation("hotAirBalloon",balloonImage2);
+    balloon.x=balloon.x -10
     //write code to move air balloon in left direction
   }
   else if(keyDown(RIGHT_ARROW)){
-    balloon.addAnimation("hotAirBalloon",balloonImage2);
+    balloon.x=balloon.x +10
     //write code to move air balloon in right direction
   }
   else if(keyDown(UP_ARROW)){
-    updateHeight(0,-10)
-    balloon.addAnimation("hotAirBalloon",balloonImage2);
-    balloon.scale=balloon.scale= -0.01;
+    //updateHeight(0,-10)
+    balloon.y=balloon.y -10
+    //balloon.scale=balloon.scale= -0.01;
     //write code to move air balloon in up direction
   }
   else if(keyDown(DOWN_ARROW)){
-    updateHeight(0,-2)
-    balloon.addAnimation("hotAirBalloon",balloonImage2);
-    balloon.scale=balloon.scale= -0.01;
+    //updateHeight(0,-2)
+    balloon.y=balloon.y +10
+   // balloon.scale=balloon.scale= -0.01;
     //write code to move air balloon in down direction
   }
 
@@ -56,16 +56,15 @@ function draw() {
   text("**Use arrow keys to move Hot Air Balloon!!",40,40);
 }
 function updateHeight(x,y){
-database.ref('ballon/position').set({
+database.ref('balloon/position').set({
   'x':height.x + x,
   'y':height.y + y
 })
-
-function readPosition(){
+}
+function readPosition(data){
   height=data.val();
   balloon.x=height.x
   balloon.y=height.y
 }
 
 
-}
